@@ -1,0 +1,52 @@
+{
+  "assistidos": [
+    {
+      "cpf": "40028922123",
+      "nome": "João"
+    },
+    {
+      "cpf": "40028922321",
+      "nome": "Caroline"
+    },
+    {
+      "cpf": "40028922333",
+      "nome": "Matheus Teste"
+    },
+    {
+      "cpf": "12312312312",
+      "nome": "Calvo"
+    }
+  ],
+  "atendimentos": [
+    {
+      "id": "9ca5fb48-ece5-4a41-af00-e1694ec03c19",
+      "assistido_cpf": "40028922123",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T12:21:42.070030Z"
+    },
+    {
+      "id": "905550a9-d331-4361-9a18-d5f4895fd851",
+      "assistido_cpf": "40028922321",
+      "justificativa": "Orientação jurídica sobre divórcio litigioso e guarda",
+      "data_hora": "2026-10-15T12:23:55.785875Z"
+    },
+    {
+      "id": "a4add704-0c2c-47cf-930b-a9dd638721df",
+      "assistido_cpf": "40028922333",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T12:27:23.997780Z"
+    },
+    {
+      "id": "24ec0c58-6aa4-42b0-9d2b-c028b18022c2",
+      "assistido_cpf": "12312312312",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T12:39:18.495857Z"
+    },
+    {
+      "id": "ec32a1a3-b4b2-4030-bd68-08d1eec708ad",
+      "assistido_cpf": "40028922321",
+      "justificativa": "teste",
+      "data_hora": "2026-10-15T13:25:20.214233Z"
+    }
+  ]
+}
