@@ -146,7 +146,7 @@ export default function RegistrarAtendimentoForm({
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
               placeholder="Ex: 12345678901"
-              className="flex-1 px-3.5 py-2 text-sm font-mono rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors"
+              className="flex-1 px-3.5 py-2 text-sm font-mono text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors"
             />
             {assistidos.length > 0 && (
               <select
@@ -155,7 +155,7 @@ export default function RegistrarAtendimentoForm({
                   if (e.target.value) setCpf(e.target.value);
                 }}
                 value=""
-                className="px-2 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-700 focus:outline-none"
+                className="px-2 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 font-medium focus:outline-none"
               >
                 <option value="" disabled>Selecionar...</option>
                 {assistidos.map((a) => (
@@ -184,7 +184,7 @@ export default function RegistrarAtendimentoForm({
             value={justificativa}
             onChange={(e) => setJustificativa(e.target.value)}
             placeholder="Descreva a demanda jurídica ou atendimento prestado..."
-            className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors resize-none"
+            className="w-full px-3.5 py-2 text-sm text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors resize-none"
           />
 
           <div className="flex items-center gap-1.5 flex-wrap mt-1.5">

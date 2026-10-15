@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { api, ApiError } from '../services/api';
-import { Assistido, FeedbackMessage } from '../types';
+import React, { useState } from "react";
+import { api, ApiError } from "../services/api";
+import { Assistido, FeedbackMessage } from "../types";
 
 interface CadastrarAssistidoFormProps {
   onAssistidoCadastrado: (assistido: Assistido) => void;
@@ -15,8 +15,8 @@ export default function CadastrarAssistidoForm({
   onAlert,
   assistidosExistentes,
 }: CadastrarAssistidoFormProps) {
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,10 +24,10 @@ export default function CadastrarAssistidoForm({
     if (!nome.trim() || !cpf.trim()) {
       onAlert({
         id: Math.random().toString(),
-        type: 'warning',
-        title: 'Campos Obrigatórios',
-        message: 'Por favor, informe o Nome e o CPF do assistido.',
-        timestamp: new Date().toLocaleTimeString('pt-BR'),
+        type: "warning",
+        title: "Campos Obrigatórios",
+        message: "Por favor, informe o Nome e o CPF do assistido.",
+        timestamp: new Date().toLocaleTimeString("pt-BR"),
       });
       return;
     }
@@ -41,36 +41,36 @@ export default function CadastrarAssistidoForm({
 
       onAlert({
         id: Math.random().toString(),
-        type: 'success',
+        type: "success",
         statusCode: 201,
-        title: 'Assistido Cadastrado com Sucesso',
+        title: "Assistido Cadastrado com Sucesso",
         message: `Assistido(a) "${novoAssistido.nome}" registrado(a) sob o CPF ${novoAssistido.cpf}.`,
-        timestamp: new Date().toLocaleTimeString('pt-BR'),
+        timestamp: new Date().toLocaleTimeString("pt-BR"),
       });
 
       onAssistidoCadastrado(novoAssistido);
-      setNome('');
-      setCpf('');
+      setNome("");
+      setCpf("");
     } catch (err) {
       if (err instanceof ApiError) {
         onAlert({
           id: Math.random().toString(),
-          type: 'error',
+          type: "error",
           statusCode: err.statusCode,
           title:
             err.statusCode === 409
-              ? 'Erro 409 - Conflito de CPF Duplicado'
+              ? "Erro 409 - Conflito de CPF Duplicado"
               : `Erro no Cadastro (HTTP ${err.statusCode})`,
           message: err.detail,
-          timestamp: new Date().toLocaleTimeString('pt-BR'),
+          timestamp: new Date().toLocaleTimeString("pt-BR"),
         });
       } else {
         onAlert({
           id: Math.random().toString(),
-          type: 'error',
-          title: 'Falha de Comunicação',
-          message: 'Não foi possível se conectar ao servidor.',
-          timestamp: new Date().toLocaleTimeString('pt-BR'),
+          type: "error",
+          title: "Falha de Comunicação",
+          message: "Não foi possível se conectar ao servidor.",
+          timestamp: new Date().toLocaleTimeString("pt-BR"),
         });
       }
     } finally {
@@ -92,8 +92,8 @@ export default function CadastrarAssistidoForm({
       setCpf(primeiro.cpf);
     } else {
       // Valor padrão de teste
-      setNome('Pessoa Repetida');
-      setCpf('12345678901');
+      setNome("Pessoa Repetida");
+      setCpf("12345678901");
     }
   };
 
@@ -105,8 +105,12 @@ export default function CadastrarAssistidoForm({
             1
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Cadastrar Assistido</h2>
-            <p className="text-xs text-slate-500">Adicione um novo cidadão à base</p>
+            <h2 className="text-base font-bold text-slate-800">
+              Cadastrar Assistido
+            </h2>
+            <p className="text-xs text-slate-500">
+              Adicione um novo cidadão à base
+            </p>
           </div>
         </div>
         {/*<span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
@@ -116,7 +120,10 @@ export default function CadastrarAssistidoForm({
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="assistido-nome" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="assistido-nome"
+            className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1"
+          >
             Nome Completo
           </label>
           <input
@@ -126,16 +133,19 @@ export default function CadastrarAssistidoForm({
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Ex: Carlos Eduardo de Oliveira"
-            className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-colors"
+            className="w-full px-3.5 py-2 text-sm text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-colors"
           />
         </div>
 
         <div>
           <div className="flex justify-between items-center mb-1">
-            <label htmlFor="assistido-cpf" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+            <label
+              htmlFor="assistido-cpf"
+              className="block text-xs font-semibold text-slate-700 uppercase tracking-wider"
+            >
               CPF (Apenas dígitos ou formatado)
             </label>
-            <span className="text-[11px] text-slate-400">11 a 14 dígitos</span>
+            <span className="text-[11px] text-slate-400">11 dígitos</span>
           </div>
           <input
             id="assistido-cpf"
@@ -145,7 +155,7 @@ export default function CadastrarAssistidoForm({
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
             placeholder="Ex: 12345678901"
-            className="w-full px-3.5 py-2 text-sm font-mono rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-colors"
+            className="w-full px-3.5 py-2 text-sm font-mono text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-colors"
           />
         </div>
 
@@ -157,14 +167,29 @@ export default function CadastrarAssistidoForm({
           >
             {loading ? (
               <>
-                <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
                 </svg>
                 Cadastrando...
               </>
             ) : (
-              'Cadastrar Assistido'
+              "Cadastrar Assistido"
             )}
           </button>
 

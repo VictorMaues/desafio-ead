@@ -169,7 +169,7 @@ export default function HistoricoAtendimentos({
             value={cpfBusca}
             onChange={(e) => setCpfBusca(e.target.value)}
             placeholder="Digite o CPF a consultar..."
-            className="flex-1 px-3.5 py-2 text-sm font-mono rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-colors"
+            className="flex-1 px-3.5 py-2 text-sm font-mono text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-colors"
           />
           <button
             type="submit"
