@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏛️ Defensoria Pública - Frontend (Desafio EAD)
 
-## Getting Started
+Interface web moderna desenvolvida em **Next.js (App Router)**, **TypeScript** e **TailwindCSS** para gerenciamento de assistidos e acompanhamento do histórico cronológico de atendimentos jurídicos da Defensoria Pública.
 
-First, run the development server:
+---
+
+## 🚀 Como Executar (Dois Terminais)
+
+Para utilizar o sistema completo, é necessário rodar o **Backend** (API FastAPI) e o **Frontend** (Next.js) simultaneamente em dois terminais separados:
+
+### 🖥️ Terminal 1: Backend (Porta 8000)
+
+Abra o primeiro terminal na raiz do projeto:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. Navegue até a raiz do projeto
+cd /home/victor/desafio-ead
+
+# 2. Ative o ambiente virtual Python
+source .venv/bin/activate
+
+# 3. Inicie o servidor da API com recarregamento automático
+uvicorn backend.src.api.main:app --reload --port 8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 🌐 **API Backend ativa em:** [http://localhost:8000](http://localhost:8000)  
+> 📚 **Documentação Swagger:** [http://localhost:8000/docs](http://localhost:8000/docs)  
+> 📖 **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 💻 Terminal 2: Frontend (Porta 3000)
 
-## Learn More
+Abra o segundo terminal na pasta do frontend:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# 1. Navegue até a pasta do frontend
+cd /home/victor/desafio-ead/frontend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 2. Inicie o servidor de desenvolvimento do Next.js
+bun run dev
+# (caso utilize npm, execute: npm run dev)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> 🌐 **Aplicação Frontend ativa em:** [http://localhost:3000](http://localhost:3000)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📋 Funcionalidades da Interface
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A aplicação é organizada em um painel em página única dividido em 3 blocos principais:
+
+1. **Bloco 1: Cadastrar Assistido (`POST /assistidos`)**
+   - Inputs: **Nome Completo** e **CPF** (limitado a 11 dígitos numéricos).
+   - Validações: Exibe alerta visual caso ocorra duplicidade de CPF (`HTTP 409 Conflict`).
+
+2. **Bloco 2: Registrar Atendimento (`POST /atendimentos`)**
+   - Inputs: **CPF do Assistido** (com atalho para seleção rápida dos já cadastrados) e **Justificativa** (mínimo de 5 caracteres).
+   - Validações: Exibe alerta visual se o assistido informado não existir na base (`HTTP 404 Not Found`).
+
+3. **Bloco 3: Consultar Histórico por CPF (`GET /atendimentos/assistido/{cpf}`)**
+   - Busca por CPF exibindo dados do assistido e uma **Linha do Tempo (Timeline)** cronológica de atendimentos com data/hora em UTC e UUID único.
+
+---
+
+## 🛠️ Tecnologias do Frontend
+
+- **Next.js 16** (App Router & Turbopack)
+- **React 19**
+- **TypeScript**
+- **TailwindCSS**
+- **Bun** (Runtime & Package Manager)
+
+---
+
+## ⚙️ Configurações Opcionais
+
+Por padrão, o frontend se comunica com a API em `http://localhost:8000`. Se desejar alterar o endereço do backend, crie um arquivo `.env.local` em `frontend/`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```

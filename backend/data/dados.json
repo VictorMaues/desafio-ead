@@ -19,6 +19,10 @@
     {
       "cpf": "11111111112",
       "nome": "Nivaldo"
+    },
+    {
+      "cpf": "11111111115",
+      "nome": "Sami"
     }
   ],
   "atendimentos": [
@@ -57,6 +61,48 @@
       "assistido_cpf": "11111111112",
       "justificativa": "Preso por amar muito",
       "data_hora": "2026-10-15T16:44:57.708208Z"
+    },
+    {
+      "id": "1673eab4-de1d-42ef-acd6-b31ccc45f907",
+      "assistido_cpf": "11111111115",
+      "justificativa": "Orientação jurídica sobre divórcio litigioso e guarda",
+      "data_hora": "2026-10-15T17:56:21.103609Z"
+    },
+    {
+      "id": "8223e0e9-9302-4ba1-a53b-646f8b33bfef",
+      "assistido_cpf": "11111111115",
+      "justificativa": "Casamento",
+      "data_hora": "2026-10-15T17:56:36.157568Z"
+    },
+    {
+      "id": "f4cb8637-0b3a-4a12-81b8-3f8c697201ba",
+      "assistido_cpf": "11111111115",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T18:01:54.256367Z"
+    },
+    {
+      "id": "308edcd5-9718-482f-b744-444e3666234a",
+      "assistido_cpf": "40028922321",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T18:02:17.728480Z"
+    },
+    {
+      "id": "4cb760f9-0561-458e-949d-61e176466960",
+      "assistido_cpf": "40028922321",
+      "justificativa": "Orientação jurídica sobre divórcio litigioso e guarda",
+      "data_hora": "2026-10-15T18:02:18.630935Z"
+    },
+    {
+      "id": "7d64a669-791d-4baa-a7b2-739a4befd9d0",
+      "assistido_cpf": "40028922321",
+      "justificativa": "Ação de alimentos - Fixação de pensão alimentícia",
+      "data_hora": "2026-10-15T18:02:19.918361Z"
+    },
+    {
+      "id": "2b9ae4ce-6c30-4a2e-be25-78ef3a67c8c8",
+      "assistido_cpf": "40028922321",
+      "justificativa": "Juntada de documentos de comprovação de renda familiar",
+      "data_hora": "2026-10-15T18:02:20.936753Z"
     }
   ]
 }
