@@ -117,12 +117,11 @@ export default function RegistrarAtendimentoForm({
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-800">Registrar Atendimento</h2>
-            <p className="text-xs text-slate-500">Vincule uma nova consulta a um CPF existente</p>
           </div>
         </div>
-        <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
+        {/*<span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
           POST /atendimentos
-        </span>
+        </span>*/}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -143,6 +142,7 @@ export default function RegistrarAtendimentoForm({
               id="atendimento-cpf"
               type="text"
               required
+              maxLength={11}
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
               placeholder="Ex: 12345678901"
@@ -233,14 +233,14 @@ export default function RegistrarAtendimentoForm({
           </button>
 
           {/* Botão para testar erro 404 ao vivo na demo */}
-          <button
+          {/*<button
             type="button"
             onClick={simularCpfInexistente}
             className="text-xs py-1.5 px-3 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded transition-colors cursor-pointer text-center font-medium"
             title="Preenche um CPF inexistente para demonstrar o retorno 404 da API"
           >
             ⚠️ Testar Erro 404 (Assistido Inexistente)
-          </button>
+          </button>*/}
         </div>
       </form>
     </div>

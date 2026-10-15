@@ -149,12 +149,9 @@ export default function HistoricoAtendimentos({
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-800">Consultar Histórico por CPF</h2>
-            <p className="text-xs text-slate-500">Linha do tempo completa dos atendimentos vinculados</p>
           </div>
         </div>
         <div className="flex gap-1.5 text-xs font-mono">
-          <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">GET /assistidos/:cpf</span>
-          <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">GET /atendimentos/assistido/:cpf</span>
         </div>
       </div>
 
@@ -168,6 +165,7 @@ export default function HistoricoAtendimentos({
             id="busca-cpf"
             type="text"
             required
+            maxLength={11}
             value={cpfBusca}
             onChange={(e) => setCpfBusca(e.target.value)}
             placeholder="Digite o CPF a consultar..."
@@ -238,16 +236,6 @@ export default function HistoricoAtendimentos({
                 </div>
               </div>
             </div>
-
-            {onSelectCpfForAtendimento && (
-              <button
-                type="button"
-                onClick={() => onSelectCpfForAtendimento(assistidoAtual.cpf)}
-                className="text-xs px-3 py-1.5 bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-300 rounded-lg font-medium transition-colors cursor-pointer shadow-2xs"
-              >
-                + Novo Atendimento para este CPF
-              </button>
-            )}
           </div>
 
           {/* Linha do Tempo (Timeline) */}

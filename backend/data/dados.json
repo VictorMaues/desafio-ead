@@ -15,6 +15,10 @@
     {
       "cpf": "12312312312",
       "nome": "Calvo"
+    },
+    {
+      "cpf": "11111111112",
+      "nome": "Nivaldo"
     }
   ],
   "atendimentos": [
@@ -47,6 +51,12 @@
       "assistido_cpf": "40028922321",
       "justificativa": "teste",
       "data_hora": "2026-10-15T13:25:20.214233Z"
+    },
+    {
+      "id": "7d9b9d80-a753-47f8-8f4b-fe80a1ad52e4",
+      "assistido_cpf": "11111111112",
+      "justificativa": "Preso por amar muito",
+      "data_hora": "2026-10-15T16:44:57.708208Z"
     }
   ]
 }

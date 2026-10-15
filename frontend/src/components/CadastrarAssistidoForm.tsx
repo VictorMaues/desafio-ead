@@ -109,9 +109,9 @@ export default function CadastrarAssistidoForm({
             <p className="text-xs text-slate-500">Adicione um novo cidadão à base</p>
           </div>
         </div>
-        <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
+        {/*<span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
           POST /assistidos
-        </span>
+        </span>*/}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -141,6 +141,7 @@ export default function CadastrarAssistidoForm({
             id="assistido-cpf"
             type="text"
             required
+            maxLength={11}
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
             placeholder="Ex: 12345678901"
@@ -168,7 +169,7 @@ export default function CadastrarAssistidoForm({
           </button>
 
           {/* Botões rápidos para facilitar a demonstração ao vivo */}
-          <div className="flex items-center gap-2 pt-1">
+          {/*<div className="flex items-center gap-2 pt-1">
             <button
               type="button"
               onClick={preencherExemplo}
@@ -185,7 +186,7 @@ export default function CadastrarAssistidoForm({
             >
               ⚠️ Testar Erro 409
             </button>
-          </div>
+          </div>*/}
         </div>
       </form>
     </div>
