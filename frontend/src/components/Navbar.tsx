@@ -30,9 +30,6 @@ export default function Navbar({
                 <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
                   Defensoria Pública
                 </h1>
-                <span className="bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-emerald-500/30">
-                  EST-2
-                </span>
               </div>
               <p className="text-xs text-slate-400">
                 Sistema de Gestão de Assistidos e Histórico de Atendimentos
