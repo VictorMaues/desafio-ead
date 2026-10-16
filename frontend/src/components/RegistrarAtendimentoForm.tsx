@@ -3,6 +3,14 @@
 import React, { useState } from 'react';
 import { api, ApiError } from '../services/api';
 import { Assistido, Atendimento, FeedbackMessage } from '../types';
+import { ModuleCard, SectionTitle, ui } from './ui/primitives';
+import { IconChevronDown, IconFileText, IconSpinner } from './ui/Icons';
+
+const SUGESTOES: { label: string; texto: string }[] = [
+  { label: 'Pensão Alimentícia', texto: 'Ação de alimentos - Fixação de pensão alimentícia' },
+  { label: 'Juntada de Documentos', texto: 'Juntada de documentos de comprovação de renda familiar' },
+  { label: 'Divórcio / Guarda', texto: 'Orientação jurídica sobre divórcio litigioso e guarda' },
+];
 
 interface RegistrarAtendimentoFormProps {
   assistidos: Assistido[];
@@ -109,74 +117,74 @@ export default function RegistrarAtendimentoForm({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
-            2
-          </div>
-          <div>
-            <h2 className="text-base font-bold text-slate-800">Registrar Atendimento</h2>
-          </div>
-        </div>
-        {/*<span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">
-          POST /atendimentos
-        </span>*/}
-      </div>
+    <ModuleCard id="registrar" index="02" title="Registrar Atendimento">
+      {/*<span className={ui.tag}>POST /atendimentos</span>*/}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <div className="flex justify-between items-center mb-1">
-            <label htmlFor="atendimento-cpf" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-              CPF do Assistido
-            </label>
-            {assistidos.length > 0 && (
-              <span className="text-[11px] text-emerald-700 font-medium">
-                {assistidos.length} cadastrado(s)
-              </span>
-            )}
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <SectionTitle
+          aside={
+            assistidos.length > 0 ? (
+              <span className={ui.mono}>{assistidos.length} cadastrado(s)</span>
+            ) : undefined
+          }
+        >
+          Identificação
+        </SectionTitle>
 
-          <div className="flex gap-2">
+        <div className="space-y-1.5">
+          <label htmlFor="atendimento-cpf" className={ui.label}>
+            CPF do Assistido
+          </label>
+
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               id="atendimento-cpf"
               type="text"
               required
               maxLength={11}
+              inputMode="numeric"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
               placeholder="Ex: 12345678901"
-              className="flex-1 px-3.5 py-2 text-sm font-mono text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors"
+              className={`${ui.input} ${ui.mono} tracking-wide sm:flex-1`}
             />
             {assistidos.length > 0 && (
-              <select
-                aria-label="Selecionar assistido recente"
-                onChange={(e) => {
-                  if (e.target.value) setCpf(e.target.value);
-                }}
-                value=""
-                className="px-2 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 font-medium focus:outline-none"
-              >
-                <option value="" disabled>Selecionar...</option>
-                {assistidos.map((a) => (
-                  <option key={a.cpf} value={a.cpf}>
-                    {a.nome} ({a.cpf})
-                  </option>
-                ))}
-              </select>
+              <div className="relative sm:w-40">
+                <select
+                  aria-label="Selecionar assistido recente"
+                  onChange={(e) => {
+                    if (e.target.value) setCpf(e.target.value);
+                  }}
+                  value=""
+                  className={`${ui.field} appearance-none pr-9 text-xs font-medium cursor-pointer`}
+                >
+                  <option value="" disabled>Selecionar...</option>
+                  {assistidos.map((a) => (
+                    <option key={a.cpf} value={a.cpf}>
+                      {a.nome} ({a.cpf})
+                    </option>
+                  ))}
+                </select>
+                <IconChevronDown className="w-3.5 h-3.5 pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+              </div>
             )}
           </div>
         </div>
 
-        <div>
-          <div className="flex justify-between items-center mb-1">
-            <label htmlFor="atendimento-justificativa" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-              Justificativa / Motivo do Atendimento
-            </label>
-            <span className="text-[11px] text-slate-400">
+        <SectionTitle
+          aside={
+            <span className={`${ui.mono} ${justificativa.trim().length >= 5 ? 'text-zinc-900' : ''}`}>
               {justificativa.length} caracteres (mín. 5)
             </span>
-          </div>
+          }
+        >
+          Justificativa / Motivo do Atendimento
+        </SectionTitle>
+
+        <div className="space-y-3">
+          <label htmlFor="atendimento-justificativa" className="sr-only">
+            Justificativa / Motivo do Atendimento
+          </label>
           <textarea
             id="atendimento-justificativa"
             required
@@ -184,51 +192,44 @@ export default function RegistrarAtendimentoForm({
             value={justificativa}
             onChange={(e) => setJustificativa(e.target.value)}
             placeholder="Descreva a demanda jurídica ou atendimento prestado..."
-            className="w-full px-3.5 py-2 text-sm text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors resize-none"
+            className={`${ui.field} resize-none leading-relaxed`}
           />
 
-          <div className="flex items-center gap-1.5 flex-wrap mt-1.5">
-            <span className="text-[11px] text-slate-400">Sugestões:</span>
-            <button
-              type="button"
-              onClick={() => preencherJustificativaRapida('Ação de alimentos - Fixação de pensão alimentícia')}
-              className="text-[11px] px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded cursor-pointer"
-            >
-              Pensão Alimentícia
-            </button>
-            <button
-              type="button"
-              onClick={() => preencherJustificativaRapida('Juntada de documentos de comprovação de renda familiar')}
-              className="text-[11px] px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded cursor-pointer"
-            >
-              Juntada de Documentos
-            </button>
-            <button
-              type="button"
-              onClick={() => preencherJustificativaRapida('Orientação jurídica sobre divórcio litigioso e guarda')}
-              className="text-[11px] px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded cursor-pointer"
-            >
-              Divórcio / Guarda
-            </button>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] uppercase tracking-wider text-zinc-400 mr-1">Sugestões</span>
+            {SUGESTOES.map((s) => {
+              const ativo = justificativa === s.texto;
+              return (
+                <button
+                  key={s.label}
+                  type="button"
+                  aria-pressed={ativo}
+                  onClick={() => preencherJustificativaRapida(s.texto)}
+                  className={`${ui.chip} ${ativo ? ui.chipActive : ui.chipIdle}`}
+                >
+                  {s.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        <div className="pt-2 flex flex-col gap-2">
+        <div className="pt-1 flex flex-col gap-2">
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium text-sm rounded-lg transition-colors shadow-sm disabled:opacity-60 cursor-pointer flex items-center justify-center gap-2"
+            className={`${ui.btnPrimary} w-full`}
           >
             {loading ? (
               <>
-                <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                </svg>
+                <IconSpinner className="w-3.5 h-3.5" />
                 Registrando...
               </>
             ) : (
-              'Registrar Atendimento'
+              <>
+                <IconFileText className="w-3.5 h-3.5" />
+                Registrar Atendimento
+              </>
             )}
           </button>
 
@@ -236,13 +237,13 @@ export default function RegistrarAtendimentoForm({
           {/*<button
             type="button"
             onClick={simularCpfInexistente}
-            className="text-xs py-1.5 px-3 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded transition-colors cursor-pointer text-center font-medium"
+            className={ui.btnSecondary}
             title="Preenche um CPF inexistente para demonstrar o retorno 404 da API"
           >
-            ⚠️ Testar Erro 404 (Assistido Inexistente)
+            Testar Erro 404 (Assistido Inexistente)
           </button>*/}
         </div>
       </form>
-    </div>
+    </ModuleCard>
   );
 }

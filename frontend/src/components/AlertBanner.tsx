@@ -2,6 +2,15 @@
 
 import React from 'react';
 import { FeedbackMessage } from '../types';
+import {
+  IconAlertTriangle,
+  IconBan,
+  IconCheckCircle,
+  IconInfo,
+  IconSearchX,
+  IconX,
+  IconXCircle,
+} from './ui/Icons';
 
 interface AlertBannerProps {
   alerts: FeedbackMessage[];
@@ -9,19 +18,34 @@ interface AlertBannerProps {
   onClearAll: () => void;
 }
 
+const STATUS_LABEL: Record<number, string> = {
+  409: 'CONFLICT',
+  404: 'NOT FOUND',
+  201: 'CREATED',
+  200: 'OK',
+};
+
+const TYPE_LABEL: Record<FeedbackMessage['type'], string> = {
+  success: 'SUCESSO',
+  error: 'ERRO',
+  warning: 'AVISO',
+  info: 'INFO',
+};
+
 export default function AlertBanner({ alerts, onDismiss, onClearAll }: AlertBannerProps) {
   if (alerts.length === 0) return null;
 
   return (
-    <div className="space-y-3 mb-8">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold tracking-wider uppercase text-slate-500">
-          Notificações e Respostas da API ({alerts.length})
-        </span>
+    <section className="space-y-3 mb-8" aria-label="Notificações">
+      <div className="flex items-end justify-between gap-3 border-b border-zinc-200 pb-2">
+        <h2 className="text-sm font-medium text-zinc-900">
+          Notificações e Respostas da API{' '}
+          <span className="font-mono tabular-nums text-zinc-400">({alerts.length})</span>
+        </h2>
         {alerts.length > 1 && (
           <button
             onClick={onClearAll}
-            className="text-xs text-slate-500 hover:text-slate-700 underline cursor-pointer"
+            className="text-xs text-zinc-500 hover:text-zinc-900 underline underline-offset-4 decoration-zinc-300 hover:decoration-zinc-900 transition-colors cursor-pointer"
           >
             Limpar todas
           </button>
@@ -29,75 +53,70 @@ export default function AlertBanner({ alerts, onDismiss, onClearAll }: AlertBann
       </div>
 
       {alerts.map((alert) => {
-        const isError = alert.type === 'error';
-        const isSuccess = alert.type === 'success';
-        const isWarning = alert.type === 'warning';
         const isConflict409 = alert.statusCode === 409;
         const isNotFound404 = alert.statusCode === 404;
+        const isInfo = alert.type === 'info' && !alert.statusCode;
 
-        let bgClass = 'bg-slate-50 border-slate-300 text-slate-800';
-        let badgeClass = 'bg-slate-200 text-slate-800';
-        let icon = 'ℹ️';
+        // Ícone monocromático por semântica (sem cores de status)
+        let Icon = IconInfo;
+        if (isConflict409) Icon = IconBan;
+        else if (isNotFound404) Icon = IconSearchX;
+        else if (alert.type === 'error') Icon = IconXCircle;
+        else if (alert.type === 'success') Icon = IconCheckCircle;
+        else if (alert.type === 'warning') Icon = IconAlertTriangle;
 
-        if (isConflict409) {
-          bgClass = 'bg-rose-50 border-rose-400 text-rose-900 shadow-sm';
-          badgeClass = 'bg-rose-600 text-white font-bold';
-          icon = '🚫';
-        } else if (isNotFound404) {
-          bgClass = 'bg-amber-50 border-amber-400 text-amber-900 shadow-sm';
-          badgeClass = 'bg-amber-600 text-white font-bold';
-          icon = '⚠️';
-        } else if (isError) {
-          bgClass = 'bg-red-50 border-red-300 text-red-900';
-          badgeClass = 'bg-red-600 text-white';
-          icon = '❌';
-        } else if (isSuccess) {
-          bgClass = 'bg-emerald-50 border-emerald-400 text-emerald-900 shadow-sm';
-          badgeClass = 'bg-emerald-600 text-white';
-          icon = '✅';
-        } else if (isWarning) {
-          bgClass = 'bg-yellow-50 border-yellow-300 text-yellow-900';
-          badgeClass = 'bg-yellow-600 text-white';
-          icon = '⚠️';
-        }
+        // Erros, sucessos e avisos ganham a borda editorial marcada; info é discreto
+        const containerClass = isInfo
+          ? 'border border-zinc-300 bg-white'
+          : 'border-2 border-zinc-900 bg-zinc-50';
+
+        const tagText = alert.statusCode
+          ? `HTTP ${alert.statusCode}${STATUS_LABEL[alert.statusCode] ? ` · ${STATUS_LABEL[alert.statusCode]}` : ''}`
+          : TYPE_LABEL[alert.type];
 
         return (
           <div
             key={alert.id}
             role="alert"
-            className={`border-l-4 p-4 rounded-r-lg transition-all duration-200 flex items-start justify-between gap-3 ${bgClass}`}
+            className={`animate-enter rounded-3xl p-4 sm:p-5 flex items-start justify-between gap-4 ${containerClass}`}
           >
-            <div className="flex items-start gap-3">
-              <span className="text-xl select-none" aria-hidden="true">{icon}</span>
-              <div>
+            <div className="flex items-start gap-3.5 min-w-0">
+              <span
+                className={`flex shrink-0 items-center justify-center h-9 w-9 rounded-2xl ${
+                  isInfo ? 'border border-zinc-300 text-zinc-900' : 'bg-zinc-900 text-white'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+              </span>
+              <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  {alert.statusCode && (
-                    <span className={`px-2 py-0.5 text-xs rounded font-mono ${badgeClass}`}>
-                      HTTP {alert.statusCode}
-                      {alert.statusCode === 409 && ' • CONFLICT'}
-                      {alert.statusCode === 404 && ' • NOT FOUND'}
-                      {alert.statusCode === 201 && ' • CREATED'}
-                      {alert.statusCode === 200 && ' • OK'}
-                    </span>
-                  )}
-                  <h4 className="text-sm font-bold">{alert.title}</h4>
-                  <span className="text-xs opacity-75">{alert.timestamp}</span>
+                  <span
+                    className={
+                      isInfo
+                        ? 'inline-flex items-center border border-zinc-300 text-zinc-700 text-xs font-mono px-3 py-1 rounded-full'
+                        : 'inline-flex items-center bg-zinc-900 text-white text-xs font-mono px-3 py-1 rounded-full tabular-nums'
+                    }
+                  >
+                    {tagText}
+                  </span>
+                  <h4 className="text-sm font-semibold text-zinc-900">{alert.title}</h4>
+                  <span className="text-xs font-mono tabular-nums text-zinc-400">{alert.timestamp}</span>
                 </div>
-                <p className="text-sm mt-1 leading-relaxed font-medium">{alert.message}</p>
+                <p className="text-sm mt-1.5 leading-relaxed text-zinc-700 break-words">{alert.message}</p>
               </div>
             </div>
 
             <button
               onClick={() => onDismiss(alert.id)}
-              className="text-slate-400 hover:text-slate-700 p-1 rounded-md text-lg leading-none transition-colors"
+              className="shrink-0 flex items-center justify-center h-8 w-8 rounded-full border border-zinc-300 bg-white text-zinc-500 hover:text-zinc-900 hover:border-zinc-900 transition-colors cursor-pointer"
               title="Fechar notificação"
               aria-label="Fechar"
             >
-              &times;
+              <IconX className="w-3.5 h-3.5" />
             </button>
           </div>
         );
       })}
-    </div>
+    </section>
   );
 }

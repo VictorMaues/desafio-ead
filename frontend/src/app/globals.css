@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
+/*
+ * Design System — Minimalismo Monocromático de Alto Contraste
+ * Canvas zinc-100 · Superfícies brancas · Destaques zinc-900
+ * Profundidade apenas via bordas de 1px (sem sombras difusas).
+ */
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f4f4f5; /* zinc-100 */
+  --foreground: #18181b; /* zinc-900 */
 }
 
 @theme inline {
@@ -15,5 +20,39 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: #18181b;
+  color: #ffffff;
+}
+
+/* Foco acessível e monocromático para navegação por teclado */
+:focus-visible {
+  outline: 1.5px solid #18181b;
+  outline-offset: 2px;
+}
+
+/* Entrada sutil de elementos dinâmicos (alertas, itens de histórico) */
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-enter {
+  animation: enter-up 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter {
+    animation: none;
+  }
 }
