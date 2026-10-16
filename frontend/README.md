@@ -1,4 +1,4 @@
-# 🏛️ Defensoria Pública - Frontend (Desafio EAD)
+# 🏛️ Defensoria Pública - Frontend (Desafio EDA)
 
 Interface web moderna desenvolvida em **Next.js (App Router)**, **TypeScript** e **TailwindCSS** para gerenciamento de assistidos e acompanhamento do histórico cronológico de atendimentos jurídicos da Defensoria Pública.
 
@@ -10,11 +10,11 @@ Para utilizar o sistema completo, é necessário rodar o **Backend** (API FastAP
 
 ### 🖥️ Terminal 1: Backend (Porta 8000)
 
-Abra o primeiro terminal na raiz do projeto:
+Abra o primeiro terminal na raiz do projeto (`Desafio-EDA`):
 
 ```bash
-# 1. Navegue até a raiz do projeto
-cd /home/victor/desafio-ead
+# 1. Certifique-se de estar na raiz do projeto (atenção à sigla EDA):
+cd /home/victor/Desafio-EDA
 
 # 2. Ative o ambiente virtual Python
 source .venv/bin/activate
@@ -34,8 +34,9 @@ uvicorn backend.src.api.main:app --reload --port 8000
 Abra o segundo terminal na pasta do frontend:
 
 ```bash
-# 1. Navegue até a pasta do frontend
-cd /home/victor/desafio-ead/frontend
+# 1. Navegue até a pasta do frontend:
+cd /home/victor/Desafio-EDA/frontend
+# (ou se já estiver na raiz do projeto: cd frontend)
 
 # 2. Inicie o servidor de desenvolvimento do Next.js
 bun run dev
