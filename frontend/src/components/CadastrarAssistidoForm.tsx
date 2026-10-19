@@ -93,7 +93,7 @@ export default function CadastrarAssistidoForm({
     } else {
       // Valor padrão de teste
       setNome("Pessoa Repetida");
-      setCpf("12345678901");
+      setCpf("000.000.000-00");
     }
   };
 
@@ -154,7 +154,7 @@ export default function CadastrarAssistidoForm({
             maxLength={11}
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
-            placeholder="Ex: 12345678901"
+            placeholder="Ex: 000.000.000-00"
             className="w-full px-3.5 py-2 text-sm font-mono text-slate-900 bg-white placeholder:text-slate-400 font-medium rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-colors"
           />
         </div>

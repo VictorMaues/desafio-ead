@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 interface NavbarProps {
   backendOnline: boolean | null;
@@ -38,6 +39,14 @@ export default function Navbar({
           </div>
 
           <div className="flex items-center gap-3 self-end sm:self-center">
+            <Link
+              id="navbar-link-historico"
+              href="/historico"
+              className="px-3 py-1.5 rounded-full text-xs font-medium border border-slate-700 text-slate-200 hover:bg-white hover:text-slate-900 transition-colors"
+            >
+              Histórico por CPF
+            </Link>
+
             <div
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border ${
                 backendOnline === true
